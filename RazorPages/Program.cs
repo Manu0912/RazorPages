@@ -20,6 +20,10 @@ using (var scope = app.Services.CreateScope())
     SeedData.Initialize(services);
 }
 
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Movies}/{action=Index}/{Id?}");
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
