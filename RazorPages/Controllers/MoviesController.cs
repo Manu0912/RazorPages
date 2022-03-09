@@ -19,22 +19,39 @@ namespace RazorPages.Controllers
             return View(await _context.Movie.ToListAsync());
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
-            if (id == null)
+            if (id != movie.ID)
             {
                 return NotFound();
             }
 
-            var movie = await _context.Movie.FindAsync(id);
-            if (movie == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                try
+                {
+                    _context.Update(movie);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if ((await _context.Movie.FindAsync(movie.ID)) == null)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
             return View(movie);
         }
 
-        public async Task<IActionResult> OnPostAsync(Movie movie)
+        public async Task<IActionResult> Create(Movie movie)
         {
             if (!ModelState.IsValid)
             {
@@ -44,7 +61,7 @@ namespace RazorPages.Controllers
             _context.Movie.Add(movie);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Index");
         }
 
         public async Task<IActionResult> OnGetByIdAsync(int? id)

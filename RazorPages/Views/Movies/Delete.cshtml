@@ -1,5 +1,4 @@
-﻿@page
-@model RazorPages.Pages.Movies.DeleteModel
+﻿@model RazorPages.Pages.Movies.DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -47,6 +46,6 @@
     <form method="post">
         <input type="hidden" asp-for="Movie.ID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
+        <a asp-action="Index">Back to List</a>
     </form>
 </div>
