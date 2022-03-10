@@ -140,5 +140,37 @@ namespace RazorPages.Controllers
 
             return View(movie);
         }
+
+        // GET: Movies/Edit/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var movie = await _context.Movie.FindAsync(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            return View(movie);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var movie = await _context.Movie.FindAsync(id);
+
+            if (movie != null)
+            {
+                _context.Movie.Remove(movie);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
