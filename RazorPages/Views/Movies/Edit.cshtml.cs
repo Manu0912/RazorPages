@@ -21,7 +21,6 @@ namespace RazorPages.Pages.Movies
             _context = context;
         }
 
-        [BindProperty]
         public Movie Movie { get; set; }
 
     }

@@ -22,20 +22,5 @@ namespace RazorPages.Pages.Movies
 
         public Movie Movie { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Movie = await _context.Movie.FirstOrDefaultAsync(m => m.ID == id);
-
-            if (Movie == null)
-            {
-                return NotFound();
-            }
-            return Page();
-        }
     }
 }

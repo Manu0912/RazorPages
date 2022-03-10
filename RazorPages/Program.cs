@@ -22,7 +22,7 @@ using (var scope = app.Services.CreateScope())
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Movies}/{action=Index}/{Id?}");
+    pattern: "{controller=Movies}/{action=Index}/{ID?}");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
